@@ -16,17 +16,8 @@ export class CuisineListComponent implements OnInit {
   constructor(private restaurantSvc: RestaurantService, private router: Router) { }
 
   ngOnInit(): void {
-    this.restaurantSvc.getCuisineList().then(result=> {
-      console.log(result)
-      this.cuisines = result;
-    }).catch(err => {
-      console.error(err)
-    });
+
   }
 
-  getRestaurants(cuisine: string) {
-    this.router.navigate([`${cuisine}/restaurants`]);
-    
-  }
 
 }

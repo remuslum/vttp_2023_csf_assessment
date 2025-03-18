@@ -26,8 +26,7 @@ public class RestaurantService {
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
 	public List<String> getCuisines() {
-		//make query
-		return restaurantRepo.getCuisines();
+		return null;
 		
 	}
 
@@ -37,16 +36,7 @@ public class RestaurantService {
 	// DO NOT CHNAGE THE METHOD'S NAME
 	public List<String> getRestaurantsByCuisine(String cuisine) {
 		//Initialize list
-		List<String> restaurants = new LinkedList<>();
-		// Make the query
-		List<Document> results = restaurantRepo.getRestaurantsByCuisine(cuisine);
-		for (Document d: results) {
-			String restaurant = d.getString("name");
-			restaurants.add(restaurant);
-		}
-		
-		return restaurants;
-		
+		return null;
 	}
 
 	// TODO Task 4
@@ -62,8 +52,7 @@ public class RestaurantService {
 	// Use this method to insert a comment into the restaurant database
 	// DO NOT CHNAGE THE METHOD'S NAME OR THE RETURN TYPE
 	public void addComment(Comment comment) {
-		// Implmementation in here
-		restaurantRepo.addComment(comment);
+
 	}
 	//
 	// You may add other methods to this class

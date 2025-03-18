@@ -16,7 +16,7 @@ export class RestaurantService {
 	// DO NOT CHNAGE THE METHOD'S NAME
 	public getCuisineList():Promise<any> {
 		// Implememntation in here
-		return firstValueFrom(this.http.get("/api/cuisines"));
+
 
 	}
 
@@ -25,7 +25,6 @@ export class RestaurantService {
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
 	public getRestaurantsByCuisine(cuisine: string): Promise<any> {
-		return firstValueFrom(this.http.get(`/api/${cuisine}/restaurants`));
 
 	}
 	
@@ -37,7 +36,6 @@ export class RestaurantService {
 	//change back rmb
 	public getRestaurant(name: string): Promise<any> {
 		// Implememntation in here
-		return firstValueFrom(this.http.get(`/api/restaurant/${name}`));
 
 	}
 
@@ -46,13 +44,7 @@ export class RestaurantService {
 	// DO NOT CHANGE THE METHOD'S NAME OR SIGNATURE
 	public postComment(comment: Comment): Promise<any> {
 		// Implememntation in here
-		const body = {
-			restaurantId: comment.restaurantId,
-			name: comment.name,
-			rating: comment.rating,
-			text: comment.text
-		}
-		return lastValueFrom(this.http.post(`/api/comments`, body))
+
 
 	}
 }
