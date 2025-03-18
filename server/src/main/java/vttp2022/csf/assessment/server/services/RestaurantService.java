@@ -38,9 +38,11 @@ public class RestaurantService {
 	// Use the following method to get a list of restaurants by cuisine
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
-	public List<String> getRestaurantsByCuisine(String cuisine) {
-		//Initialize list
-		return null;
+	public String getRestaurantsByCuisine(String cuisine) {
+		List<String> restaurants = restaurantRepo.getRestaurantsByCuisine(cuisine);
+		JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+		restaurants.forEach(arrayBuilder::add);
+		return arrayBuilder.build().toString();
 	}
 
 	// TODO Task 4

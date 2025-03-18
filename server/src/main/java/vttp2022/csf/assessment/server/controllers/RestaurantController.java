@@ -33,7 +33,8 @@ public class RestaurantController {
     @GetMapping(path="/{cuisine}/restaurants") 
     @ResponseBody
     public ResponseEntity<String> getRestaurantsByCuisine(@PathVariable String cuisine) {
-       return null;
+        String cuisineCleaned = cuisine.replaceAll("_", "/");
+       return ResponseEntity.ok(restaurantSvc.getRestaurantsByCuisine(cuisineCleaned));
     }
 
     // @GetMapping(path="/restaurant/{name}")

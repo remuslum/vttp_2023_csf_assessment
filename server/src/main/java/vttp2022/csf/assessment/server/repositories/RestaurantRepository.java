@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +21,8 @@ public class RestaurantRepository {
 
 	private final String COLLECTION_NAME = "restaurants";
 	private final String F_CUISINE = "cuisine";
+	private final String F_NAME = "name";
+	private final String F_ID = "_id";
 
 
 	// TODO Task 2
@@ -34,7 +36,7 @@ public class RestaurantRepository {
 	public List<String> getCuisines() {
 		// Implementation in here
 		List<String> cuisines = mongoTemplate.findDistinct(new Query(), F_CUISINE, COLLECTION_NAME, String.class);
-		return cuisines.stream().map(c -> c.replaceAll("/", "_")).collect(Collectors.toList());
+		return cleanUpList(cuisines, "/", "_");
 	}
 
 	// TODO Task 3
@@ -42,15 +44,14 @@ public class RestaurantRepository {
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
 	// Write the Mongo native query above for this method
-	//  
-		/*Query to get restaurants
-		 * db.restaurants.find({
-				cuisine: "Asian"
-			}, {name:1}).sort({name:1})
-		 */
-	public List<Document> getRestaurantsByCuisine(String cuisine) {
+	// db.restaurants.distinct("name",{cuisine:"${cuisine}"})
+	public List<String> getRestaurantsByCuisine(String cuisine) {
 		// Implmementation in here
-		return null;	
+		Criteria cuisineCriteria = Criteria.where(F_CUISINE).is(cuisine);
+		Query query = Query.query(cuisineCriteria);
+		query.fields().include(F_NAME).exclude(F_ID);
+		List<String> restaurants = mongoTemplate.findDistinct(query,F_NAME, COLLECTION_NAME, String.class);
+		return cleanUpList(restaurants, "/", "_");	
 	}
 
 	// TODO Task 4
@@ -77,5 +78,7 @@ public class RestaurantRepository {
 	
 	// You may add other methods to this class
 	
-
+	public List<String> cleanUpList(List<String> stringList, String oldString, String newString){
+		return stringList.stream().map(c -> c.replaceAll("/", "_")).collect(Collectors.toList());
+	}
 }
