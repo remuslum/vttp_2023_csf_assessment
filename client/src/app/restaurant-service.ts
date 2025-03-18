@@ -23,8 +23,8 @@ export class RestaurantService {
 	// Use the following method to get a list of restaurants by cuisine
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
-	public getRestaurantsByCuisine(cuisine: string) {
-
+	public getRestaurantsByCuisine(cuisine: string):Observable<string> {
+		return this.httpClient.get<string>("/api/" + cuisine + "/restaurants")
 	}
 	
 	// TODO Task 4

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RestaurantService } from '../restaurant-service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cuisine-list',
@@ -13,12 +14,13 @@ export class CuisineListComponent implements OnInit {
 	// For View 1
   cuisines$ !: Observable<string>
   restaurantSvc = inject(RestaurantService)
+  router = inject(Router)
 
   ngOnInit(): void {
     this.cuisines$ = this.restaurantSvc.getCuisineList()
   }
 
   protected getRestaurants(c:string){
-    
+    this.router.navigate([`${c}/restaurants`])
   }
 }

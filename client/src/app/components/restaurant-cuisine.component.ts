@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { RestaurantService } from '../restaurant-service';
 
 @Component({
@@ -12,13 +12,16 @@ export class RestaurantCuisineComponent implements OnInit {
 
   route$!: Subscription;
   cuisine!: string;
-  restaurants: string[]=[];
+  restaurants$!: Observable<string>;
 
-  constructor(private restaurantSvc: RestaurantService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  activatedRoute = inject(ActivatedRoute)
+  restaurantSvc = inject(RestaurantService)
+
 	
 	// TODO Task 3
 	// For View 2
   ngOnInit(): void {
-
+    this.cuisine = this.activatedRoute.snapshot.params['cuisine']
+    this.restaurants$ = this.restaurantSvc.getRestaurantsByCuisine(this.cuisine)
   }
 }
