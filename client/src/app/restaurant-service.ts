@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { lastValueFrom, Observable } from 'rxjs'
 import { Restaurant, Comment } from './models'
 
 @Injectable()
@@ -34,6 +34,7 @@ export class RestaurantService {
 
 	//change back rmb
 	public getRestaurant(name: string) {
+		return this.httpClient.get<any>("/api/restaurant/" + name)
 		// Implememntation in here
 
 	}
@@ -41,9 +42,9 @@ export class RestaurantService {
 	// TODO Task 5
 	// Use this method to submit a comment
 	// DO NOT CHANGE THE METHOD'S NAME OR SIGNATURE
-	public postComment(comment: Comment) {
+	public postComment(comment: Comment):Observable<any> {
+		console.log(comment)
 		// Implememntation in here
-
-
+		return this.httpClient.post<Comment>("/api/comments",comment)
 	}
 }

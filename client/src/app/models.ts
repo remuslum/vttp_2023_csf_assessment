@@ -5,7 +5,6 @@ export interface Restaurant {
 	cuisine: string
 	address: string
 	coordinates: number[]
-	image: string
 }
 
 export interface Comment {

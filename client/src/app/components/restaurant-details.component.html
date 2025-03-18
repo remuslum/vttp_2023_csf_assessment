@@ -1,45 +1,46 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Cuisine</th>
+            <th>Address</th>
+            <th>Coordinates</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {{restaurant.restaurantId}}
+            </td>
+            <td>
+                {{restaurant.name}}
+            </td>
+            <td>
+                {{restaurant.cuisine}}
+            </td>
+            <td>
+                {{restaurant.address}}
+            </td>
+            <td>
+                {{restaurant.coordinates}}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="d-flex justify-content-center align-items-center">
+    <form [formGroup]="form" (submit)="submitForm()">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" formControlName="name">
 
-<!-- <div *ngIf="restaurant">
-    <form [formGroup]="form" (ngSubmit)="submitComment(restaurant.restaurantId)">
-        <table>
-            <tr>
-                <td>Restaurant id: {{restaurant.restaurantId}}</td>
-            </tr>
-            <tr>
-                <td>Name: {{restaurant.name}}</td>
-            </tr>
-            <tr>
-                <td>Cuisine: {{restaurant.cuisine}}</td>
-            </tr>
-            <tr>
-                <td>Address: {{restaurant.address}}</td>
-            </tr>
-            <tr>
-                <td><img src="{{restaurant.image}}"></td>
-            </tr>
-        </table>
-        <hr>
-        <h2>Comment</h2>
-        <table>
-            <tr>
-                <td>Name: </td>
-                <td><input type="text" formControlName="name"></td>
-            </tr>
-            <tr>
-                <td>Rating:</td>
-                <td><input type="number" formControlName="rating"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><textarea formControlName="text" placeholder="Type here" id="" cols="30" rows="10"></textarea></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button type="button" [routerLink]="['/']">Back</button>
-                    <button type="submit" [disabled]="isFormValid()">Submit</button>
-                </td>
-            </tr>
-        </table>
+        <label class="form-label">Rating</label>
+        <input type="text" class="form-control" formControlName="rating">
+
+        <label class="form-label">Text</label>
+        <div class="form-floating">
+            <textarea class="form-control" formControlName="text"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="isFormInvalid()">Submit</button>
     </form>
-</div> -->
+</div>
+<button class="btn btn-secondary" [routerLink]="['/']">Back</button>

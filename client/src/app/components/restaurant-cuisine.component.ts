@@ -16,6 +16,7 @@ export class RestaurantCuisineComponent implements OnInit {
 
   activatedRoute = inject(ActivatedRoute)
   restaurantSvc = inject(RestaurantService)
+  router = inject(Router)
 
 	
 	// TODO Task 3
@@ -23,5 +24,9 @@ export class RestaurantCuisineComponent implements OnInit {
   ngOnInit(): void {
     this.cuisine = this.activatedRoute.snapshot.params['cuisine']
     this.restaurants$ = this.restaurantSvc.getRestaurantsByCuisine(this.cuisine)
+  }
+
+  getRestaurantDetails(name:string){
+    this.router.navigate([`${this.cuisine}/restaurants/${name}`])
   }
 }
