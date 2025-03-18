@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -23,6 +24,12 @@ public class RestaurantRepository {
 	private final String F_CUISINE = "cuisine";
 	private final String F_NAME = "name";
 	private final String F_ID = "_id";
+
+	private final String C_COMMENTS = "comments";
+	private final String F_R_ID = "restaurantId";
+	private final String F_TEXT = "text";
+	private final String F_RATING = "rating";
+
 
 
 	// TODO Task 2
@@ -59,10 +66,14 @@ public class RestaurantRepository {
 	// You can add any parameters (if any) 
 	// DO NOT CHNAGE THE METHOD'S NAME OR THE RETURN TYPE
 	// Write the Mongo native query above for this method
-	//  
+	// db.restaurants.find({name:"Ajisen Ramen"}) 
 		
 	public Optional<Restaurant> getRestaurant(String name) {
-		return null;
+		Query query = Query.query(Criteria.where(F_NAME).is(name));
+		Optional<Document> restaurantDoc = Optional.ofNullable(mongoTemplate.findOne(query,Document.class,COLLECTION_NAME));
+		return restaurantDoc.map(r -> {
+			return Restaurant.createFromDoc(r);
+		});
 		
 	}
 
@@ -71,9 +82,13 @@ public class RestaurantRepository {
 	// // Use this method to insert a comment into the restaurant database
 	// // DO NOT CHNAGE THE METHOD'S NAME OR THE RETURN TYPE
 	// // Write the Mongo native query above for this method
-	// //  
+	// // db.comments.insertOne(${comment})
 	public void addComment(Comment comment) {
+		Document d = new Document();
+		d.append(F_R_ID, comment.getRestaurantId()).append(F_NAME, comment.getName()).append(F_TEXT, comment.getText())
+		.append(F_RATING, comment.getRating());
 
+		mongoTemplate.insert(d, C_COMMENTS);
 	}
 	
 	// You may add other methods to this class

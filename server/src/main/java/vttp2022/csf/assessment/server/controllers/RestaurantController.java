@@ -1,7 +1,8 @@
 package vttp2022.csf.assessment.server.controllers;
 
+import java.util.Optional;
 
-
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import vttp2022.csf.assessment.server.models.Comment;
+import vttp2022.csf.assessment.server.models.Restaurant;
 import vttp2022.csf.assessment.server.services.RestaurantService;
 
 @Controller
@@ -35,6 +40,18 @@ public class RestaurantController {
     public ResponseEntity<String> getRestaurantsByCuisine(@PathVariable String cuisine) {
         String cuisineCleaned = cuisine.replaceAll("_", "/");
        return ResponseEntity.ok(restaurantSvc.getRestaurantsByCuisine(cuisineCleaned));
+    }
+
+    @GetMapping(path="/restaurant/{name}")
+    @ResponseBody
+    public ResponseEntity<String> getRestaurant(@PathVariable String name){
+        Optional<Restaurant> optRestaurant = restaurantSvc.getRestaurant(name);
+        return optRestaurant.map(o -> {
+            return ResponseEntity.ok(o.toJson().toString());
+        }).orElseGet(() -> {
+            JsonObject error = Json.createObjectBuilder().add("error","Restaurant not found for %s".formatted(name)).build();
+            return ResponseEntity.badRequest().body(error.toString());
+        });
     }
 
     // @GetMapping(path="/restaurant/{name}")
@@ -67,7 +84,9 @@ public class RestaurantController {
     @PostMapping(path="/comments", consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> postComments(@RequestBody String body) {
-      return null; 
+        restaurantSvc.addComment(Comment.convertJsonToComment(body));
+        Document d = new Document().append("message","Comment posted");
+        return ResponseEntity.ok(d.toJson()); 
         
     }
 
