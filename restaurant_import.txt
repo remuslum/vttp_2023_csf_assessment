@@ -3,4 +3,4 @@ Atlas import:
 mongoimport --uri="${MONGO_URL}" --db=restaurants --collection=restaurants --file=restaurants.json --type=json --jsonArray
 railway import: 
 
-mongoimport --uri="mongodb://mongo:nHZQMAfyfzSQyjLqdSLgJZXJlSPOeDEt@viaduct.proxy.rlwy.net:43508/restaurants?authSource=admin" --db=restaurants --collection=restaurants --file=restaurants.json --type=json --jsonArray
+mongoimport --uri="${MONGO_URL}" --db=restaurants --collection=restaurants --file=restaurants.json --type=json --jsonArray
