@@ -1,12 +1,13 @@
 package vttp2022.csf.assessment.server.services;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
 import vttp2022.csf.assessment.server.models.Comment;
 import vttp2022.csf.assessment.server.models.Restaurant;
 import vttp2022.csf.assessment.server.repositories.RestaurantRepository;
@@ -25,8 +26,11 @@ public class RestaurantService {
 	// Use the following method to get a list of cuisines 
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
-	public List<String> getCuisines() {
-		return null;
+	public String getCuisines() {
+		List<String> cuisines = restaurantRepo.getCuisines();
+		JsonArrayBuilder cuisinesArray = Json.createArrayBuilder();
+		cuisines.forEach(cuisinesArray::add);
+		return cuisinesArray.build().toString();
 		
 	}
 

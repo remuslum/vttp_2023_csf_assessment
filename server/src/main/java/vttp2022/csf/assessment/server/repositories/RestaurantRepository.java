@@ -2,10 +2,12 @@ package vttp2022.csf.assessment.server.repositories;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import vttp2022.csf.assessment.server.models.Comment;
@@ -14,12 +16,11 @@ import vttp2022.csf.assessment.server.models.Restaurant;
 @Repository
 public class RestaurantRepository {
 
-	
-
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
 	private final String COLLECTION_NAME = "restaurants";
+	private final String F_CUISINE = "cuisine";
 
 
 	// TODO Task 2
@@ -29,10 +30,11 @@ public class RestaurantRepository {
 	// Write the Mongo native query above for this method
 
 	// Mongo query:
-	// 
+	// db.restaurants.distinct("cuisine")
 	public List<String> getCuisines() {
-		// Implmementation in here
-		return null;
+		// Implementation in here
+		List<String> cuisines = mongoTemplate.findDistinct(new Query(), F_CUISINE, COLLECTION_NAME, String.class);
+		return cuisines.stream().map(c -> c.replaceAll("/", "_")).collect(Collectors.toList());
 	}
 
 	// TODO Task 3

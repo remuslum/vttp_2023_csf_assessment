@@ -25,8 +25,8 @@ public class RestaurantController {
     
     @GetMapping(path="/cuisines")
     @ResponseBody
-    public ResponseEntity<String> getCuisines() {   
-        return null;
+    public ResponseEntity<String> getCuisines() {
+        return ResponseEntity.ok(restaurantSvc.getCuisines());
         
     }
 
