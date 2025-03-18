@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
 import { RestaurantService } from '../restaurant-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cuisine-list',
@@ -11,13 +11,14 @@ export class CuisineListComponent implements OnInit {
 
 	// TODO Task 2
 	// For View 1
-  cuisines: string[]=[];
-
-  constructor(private restaurantSvc: RestaurantService, private router: Router) { }
+  cuisines$ !: Observable<string>
+  restaurantSvc = inject(RestaurantService)
 
   ngOnInit(): void {
-
+    this.cuisines$ = this.restaurantSvc.getCuisineList()
   }
 
-
+  protected getRestaurants(c:string){
+    
+  }
 }

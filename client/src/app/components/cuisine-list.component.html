@@ -1,6 +1,10 @@
 <h1>List of cuisines</h1>
-<table *ngFor="let c of cuisines">
-    <tr>
-        <td (click)="getRestaurants(c)">{{c}}</td>
+<table class="table">
+    <tr *ngFor="let c of cuisines$ | async">
+        <td (click)="getRestaurants(c)">
+            {{c}}
+        </td>
     </tr>
 </table>
+
+

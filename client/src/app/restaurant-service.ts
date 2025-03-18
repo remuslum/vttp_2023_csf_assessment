@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
-import { firstValueFrom, lastValueFrom } from 'rxjs'
+import { inject, Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
 import { Restaurant, Comment } from './models'
 
 @Injectable()
 export class RestaurantService {
 
 	restaurant!: Restaurant;
-
-	constructor(private http: HttpClient) {	}
+	httpClient = inject(HttpClient)
 
 	// TODO Task 2 
 	// Use the following method to get a list of cuisines
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
-	public getCuisineList():Promise<any> {
+	public getCuisineList():Observable<string> {
 		// Implememntation in here
-
+		return this.httpClient.get<string>("/api/cuisines");
 
 	}
 
@@ -24,7 +23,7 @@ export class RestaurantService {
 	// Use the following method to get a list of restaurants by cuisine
 	// You can add any parameters (if any) and the return type 
 	// DO NOT CHNAGE THE METHOD'S NAME
-	public getRestaurantsByCuisine(cuisine: string): Promise<any> {
+	public getRestaurantsByCuisine(cuisine: string) {
 
 	}
 	
@@ -34,7 +33,7 @@ export class RestaurantService {
 	// DO NOT CHNAGE THE METHOD'S NAME OR THE RETURN TYPE
 
 	//change back rmb
-	public getRestaurant(name: string): Promise<any> {
+	public getRestaurant(name: string) {
 		// Implememntation in here
 
 	}
@@ -42,7 +41,7 @@ export class RestaurantService {
 	// TODO Task 5
 	// Use this method to submit a comment
 	// DO NOT CHANGE THE METHOD'S NAME OR SIGNATURE
-	public postComment(comment: Comment): Promise<any> {
+	public postComment(comment: Comment) {
 		// Implememntation in here
 
 
